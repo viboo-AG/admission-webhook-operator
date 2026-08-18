@@ -25,6 +25,29 @@ class TestCharm:
     """Test class for Admission Webhook."""
 
     @patch("charm.KubernetesServicePatch", lambda x, y, service_name: None)
+    @pytest.mark.parametrize(
+        "match_access_ml_pipeline_only",
+        [False, True],
+    )
+    def test_webhook_object_selector_context(
+        self,
+        harness: Harness,
+        match_access_ml_pipeline_only: bool,
+    ):
+        """Test that the PodDefault webhook scope is passed to its template."""
+        harness.update_config(
+            {
+                "match-access-ml-pipeline-only": match_access_ml_pipeline_only,
+            }
+        )
+        harness.begin()
+
+        assert (
+            harness.charm._context["match_access_ml_pipeline_only"]
+            is match_access_ml_pipeline_only
+        )
+
+    @patch("charm.KubernetesServicePatch", lambda x, y, service_name: None)
     @patch("charm.AdmissionWebhookCharm.k8s_resource_handler")
     @patch("charm.AdmissionWebhookCharm.crd_resource_handler")
     def test_log_forwarding(

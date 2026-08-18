@@ -1,6 +1,13 @@
 # Copyright 2023 Canonical Ltd.
 # See LICENSE file for licensing details.
 options:
+  match-access-ml-pipeline-only:
+    type: boolean
+    default: false
+    description: |
+      Only invoke the webhook for pods labelled access-ml-pipeline="true".
+      This avoids making unrelated pods depend on the PodDefault webhook while
+      preserving opt-in access to Kubeflow Pipelines.
   port:
     type: int
     default: 4443

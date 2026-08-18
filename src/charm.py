@@ -88,6 +88,7 @@ class AdmissionWebhookCharm(CharmBase):
             "port": self._port,
             "ca_bundle": b64encode(self._cert_ca.encode("ascii")).decode("utf-8"),
             "service_name": self._service_name,
+            "match_access_ml_pipeline_only": self.model.config["match-access-ml-pipeline-only"],
         }
 
     @property

@@ -19,6 +19,11 @@ webhooks:
   namespaceSelector:
     matchLabels:
       app.kubernetes.io/part-of: kubeflow-profile
+{% if match_access_ml_pipeline_only %}
+  objectSelector:
+    matchLabels:
+      access-ml-pipeline: "true"
+{% endif %}
   rules:
   - apiGroups:
     - ""
